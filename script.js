@@ -227,3 +227,39 @@ menuBtn.addEventListener("click", () => {
   menuBtn.setAttribute("aria-expanded", open);
 });
 $$(".site-header nav a").forEach(a => a.addEventListener("click", () => header.classList.remove("open")));
+
+/* ===== Visual enhancements (no effect on booking logic) ===== */
+(() => {
+  // Show a gradient instead of a broken-image icon when a photo is missing
+  document.addEventListener("error", e => {
+    if (e.target.tagName === "IMG") e.target.classList.add("img-fallback");
+  }, true);
+
+  // Subtle shadow on the header after scrolling
+  const header = $(".site-header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 10);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Fade-in on scroll (skipped when the user prefers reduced motion)
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) return;
+
+  const selector = "#tours .card, #why .card-body, .gallery img, blockquote, #about .wrap, details, #booking form, .privacy, #contact .wrap > *, #social .wrap > *";
+  const items = $$(selector);
+  items.forEach((item, i) => {
+    item.classList.add("reveal");
+    item.style.animationDelay = `${(i % 3) * 80}ms`;
+  });
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  items.forEach(item => io.observe(item));
+})();
