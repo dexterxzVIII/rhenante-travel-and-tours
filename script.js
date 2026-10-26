@@ -35,11 +35,11 @@ const TOURS = {
 };
 
 /* ===== EDIT HERE: contact and form settings ===== */
-const FORM_ENDPOINT = "https://formspree.io/f/xjyyykjp"; // get this from formspree.io
-const MESSENGER_LINK = "https://m.me/YOUR_PAGE_USERNAME";
+const FORM_ENDPOINT = "https://formspree.io/f/xjyyykjp"; // your Formspree link
+const MESSENGER_LINK = "https://m.me/YOUR_PAGE_USERNAME"; // replace with your Facebook page username
 const WHATSAPP_NUMBER = "639606054860"; // country code, no plus sign
-const VIBER_NUMBER = "639606054860";
-const FB_APP_ID = "YOUR_FB_APP_ID"; // only needed for the Messenger share button
+const VIBER_NUMBER = "+639606054860";   // with plus sign
+const FB_APP_ID = "YOUR_FB_APP_ID";     // only needed for the Messenger share button
 
 /* ===== Code below: no need to edit ===== */
 const $ = (s, root = document) => root.querySelector(s);
@@ -134,7 +134,7 @@ form.addEventListener("submit", async e => {
     status.textContent = "";
     return;
   }
-  const FORM_ENDPOINT = "https://formspree.io/f/xjyyykjp";
+  if (FORM_ENDPOINT.includes("YOUR_FORM_ID_HERE")) {
     status.className = "form-status error";
     status.textContent = "The booking form is not connected yet. Add your Formspree ID in script.js.";
     return;
