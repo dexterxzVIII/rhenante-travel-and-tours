@@ -18,13 +18,15 @@ section { padding: 3.5rem 1.25rem; }
 .narrow { max-width: 700px; margin: auto; }
 .note { font-size: .88rem; color: #555; }
 
-/* Buttons */
+< ! -- Buttons -- !>
+
 .btn { display: inline-block; padding: .8rem 1.4rem; border-radius: 999px; border: 2px solid transparent; font: 600 1rem "Open Sans", sans-serif; cursor: pointer; text-decoration: none; transition: transform .15s; }
 .btn:hover { transform: translateY(-2px); }
 .btn-primary { background: var(--green); color: #fff; }
 .btn-ghost { background: transparent; border-color: var(--blue); color: var(--blue); }
 
-/* Header and navigation */
+< ! -- Header and navigation -- !>
+
 .site-header { position: sticky; top: 0; z-index: 100; background: var(--blue); color: #fff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: .8rem 1.25rem; }
 .logo { color: #fff; font: 700 1.2rem "Poppins", sans-serif; text-decoration: none; }
 .menu-btn { background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; }
@@ -38,13 +40,15 @@ section { padding: 3.5rem 1.25rem; }
   .site-header nav { display: flex; flex-direction: row; align-items: center; width: auto; padding: 0; gap: 1.2rem; }
 }
 
-/* Hero */
+< ! -- Hero -- !>
+
 .hero { background: linear-gradient(135deg, var(--blue), var(--green)); color: #fff; text-align: center; padding: 5rem 1.25rem; }
 .hero h1 { font-size: 2.1rem; }
 .hero p { font-size: 1.1rem; max-width: 560px; margin: 0 auto 1.5rem; }
 @media (min-width: 800px) { .hero h1 { font-size: 3rem; } }
 
-/* Grid and cards */
+< ! -- Grid and cards -- !>
+
 .grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.08); transition: transform .2s; }
 .card:hover { transform: translateY(-4px); }
@@ -58,7 +62,8 @@ section { padding: 3.5rem 1.25rem; }
 .gallery img { border-radius: var(--radius); height: 180px; width: 100%; object-fit: cover; }
 blockquote { margin: 0; font-style: italic; }
 
-/* Form */
+< ! -- Form -- !>
+
 form { display: grid; gap: .9rem; }
 label { font-weight: 600; font-size: .92rem; display: grid; gap: .3rem; }
 input, select, textarea { font: inherit; padding: .7rem; border: 1px solid #aaa; border-radius: 8px; width: 100%; }
@@ -75,21 +80,21 @@ input:focus, select:focus, textarea:focus { outline: 3px solid #9cd3ea; }
 .privacy h3 { font-size: 1rem; margin-bottom: .4rem; }
 .privacy ul { padding-left: 1.2rem; margin: .4rem 0; }
 
-/* FAQ */
+< ! -- FAQ -- !>
 
 details { background: #fff; border-radius: 8px; padding: .9rem 1rem; margin-bottom: .6rem; }
 summary { font-weight: 600; cursor: pointer; }
 
-/* Map placeholder */
+< ! -- Map placeholder -- !>
 
 .map-placeholder { margin-top: 1rem; height: 250px; border: 2px dashed #999; border-radius: var(--radius); display: grid; place-items: center; color: #666; }
 
-/* Footer */
+< ! -- Footer -- !>
 
 footer { background: #14323f; color: #dfe9ee; text-align: center; padding: 2rem 1.25rem; }
 footer p { margin: .3rem 0; }
 
-/* Mobile floating message buttons */
+< ! -- Mobile floating message buttons -- !>
 
 .float-msg { display: none; position: fixed; bottom: 16px; right: 16px; z-index: 200; flex-direction: column; gap: .5rem; }
 .float-msg a { background: var(--green); color: #fff; text-decoration: none; padding: .6rem 1rem; border-radius: 999px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,.2); text-align: center; }
