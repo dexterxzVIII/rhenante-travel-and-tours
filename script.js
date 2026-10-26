@@ -129,6 +129,11 @@ function validate() {
 form.addEventListener("submit", async e => {
   e.preventDefault();
   const status = $("#form-status");
+    if (window.grecaptcha && grecaptcha.getResponse() === "") {
+    status.className = "form-status error";
+    status.textContent = "Please tick the \"I'm not a robot\" box before sending.";
+    return;
+  }
   if (!validate()) {
     status.className = "form-status";
     status.textContent = "";
@@ -150,6 +155,7 @@ form.addEventListener("submit", async e => {
     });
     if (!res.ok) throw new Error("Request failed");
     form.reset();
+        if (window.grecaptcha) grecaptcha.reset();
     el.date.min = todayISO();
     estimate();
     status.className = "form-status success";
