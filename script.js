@@ -134,7 +134,7 @@ form.addEventListener("submit", async e => {
     status.textContent = "";
     return;
   }
-  if (FORM_ENDPOINT.includes("https://formspree.io/f/xjyyykjp")) {
+  const FORM_ENDPOINT = "https://formspree.io/f/xjyyykjp";
     status.className = "form-status error";
     status.textContent = "The booking form is not connected yet. Add your Formspree ID in script.js.";
     return;
