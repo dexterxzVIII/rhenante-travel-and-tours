@@ -42,7 +42,7 @@
 <section id="tours">
   <div class="wrap">
     <h2>Tour Packages</h2>
-    <p class="note">Prices are per person and may change. Final price is confirmed when we reply to your booking.</p>
+    <p class="note">Prices are per pax and may change. Final price is confirmed when we reply to your booking.</p>
     <div id="tour-grid" class="grid"></div> <!-- Filled automatically from TOURS in script.js -->
   </div>
 </section>
@@ -51,9 +51,9 @@
   <div class="wrap">
     <h2>Why Choose Us</h2>
     <div class="grid">
-      <div class="card-body"><h3>Local Guides</h3><p>Our guides grew up on Samal and know the best spots. [EDIT THIS]</p></div>
-      <div class="card-body"><h3>Safety First</h3><p>Life vests, first aid kit, and a clear plan for every trip. [EDIT THIS]</p></div>
-      <div class="card-body"><h3>Easy Booking</h3><p>Book online or by Messenger, Viber, or WhatsApp. [EDIT THIS]</p></div>
+      <div class="card-body"><h3>Local Guides</h3><p>Our guides grew up on Samal and know the best spots.</p></div> <!-- EDIT THIS -->
+      <div class="card-body"><h3>Safety First</h3><p>Registered Tour Guides, life vests, first aid kit, and a clear plan for every trip.</p></div>
+      <div class="card-body"><h3>Easy Booking</h3><p>Book online or by Messenger, Viber, or WhatsApp.</p></div> <!-- EDIT THIS -->
     </div>
   </div>
 </section>
@@ -65,8 +65,8 @@
       <!-- Replace each src with images/your-photo.jpg -->
       <img src="https://placehold.co/600x400?text=Photo+1" alt="Beach view on Samal Island" loading="lazy">
       <img src="https://placehold.co/600x400?text=Photo+2" alt="Tourists on a island hopping boat" loading="lazy">
-      <img src="https://placehold.co/600x400?text=Photo+3" alt="Waterfall in the Samal jungle" loading="lazy">
-      <img src="https://placehold.co/600x400?text=Photo+4" alt="Group photo at a beach" loading="lazy">
+      <img src="https://placehold.co/600x400?text=Photo+3" alt="Hagimit Falls" loading="lazy">
+      <img src="https://placehold.co/600x400?text=Photo+4" alt="Kaputian Beach Park" loading="lazy">
     </div>
   </div>
 </section>
@@ -75,9 +75,9 @@
   <div class="wrap">
     <h2>What Our Guests Say</h2>
     <div class="grid">
-      <blockquote class="card-body">"Great guide and beautiful spots. Highly recommended!" <br><strong>- Sample Guest [EDIT THIS]</strong></blockquote>
-      <blockquote class="card-body">"Our family had a wonderful day. Booking was easy." <br><strong>- Sample Guest [EDIT THIS]</strong></blockquote>
-      <blockquote class="card-body">"Perfect for our company outing!" <br><strong>- Sample Guest [EDIT THIS]</strong></blockquote>
+      <blockquote class="card-body">"Great guide and beautiful spots. Highly recommended!" <br><strong>- Sample Guest</strong></blockquote> <!-- EDIT THIS -->
+      <blockquote class="card-body">"Our family had a wonderful day. Booking was easy." <br><strong>- Sample Guest </strong></blockquote> <!-- EDIT THIS -->
+      <blockquote class="card-body">"Perfect for our company outing!" <br><strong>- Sample Guest</strong></blockquote> <!-- EDIT THIS -->
     </div>
   </div>
 </section>
@@ -85,24 +85,24 @@
 <section id="about">
   <div class="wrap">
     <h2>About Us</h2>
-    <p>We are a small local tour team based in Samal Island. We started this business to share the places we love with visitors and families. [EDIT THIS with your story]</p>
-  </div>
+    <p>We are a small local tour team based in Samal Island. We started this business to share the places we love with visitors and families.</p>
+  </div> <!-- EDIT THIS -->
 </section>
 
 <section id="faq" class="alt">
   <div class="wrap">
-    <h2>Frequently Asked Questions</h2>
-    <details><summary>How do I get to Samal from Davao City?</summary><p>[EDIT THIS: add current ferry and vehicle options and check them before publishing.]</p></details>
-    <details><summary>What should I bring?</summary><p>Swimwear, sunscreen, towel, extra clothes, a dry bag, and cash for entrance fees. [EDIT THIS]</p></details>
-    <details><summary>What is your cancellation and bad weather policy?</summary><p>[EDIT THIS: e.g., Free rescheduling if we cancel due to weather. Cancellations at least 3 days ahead get a refund minus a small fee.]</p></details>
-    <details><summary>How do payment and deposits work?</summary><p>We confirm your booking first, then send payment instructions. A deposit of [EDIT THIS]% is required to hold your date.</p></details>
+    <h2>Frequently Asked Questions (FAQs)</h2>
+    <details><summary>How do I get to Samal from Davao City?</summary><p> Add current ferry and vehicle options and check them before publishing.]</p></details> <!-- EDIT THIS -->
+    <details><summary>What should I bring?</summary><p>Swimwear, sunscreen, towel, extra clothes, a dry bag, and cash for entrance fees.</p></details> <!-- EDIT THIS -->
+    <details><summary>What is your cancellation and bad weather policy?</summary><p>Free rescheduling if we cancel due to weather. Cancellations at least 3 days ahead get a refund minus a small fee.]</p></details> <!-- EDIT THIS -->
+    <details><summary>How do payment and deposits work?</summary><p>We confirm your booking first, then send payment instructions. A deposit of 50% is required to hold your date.</p></details> <!-- EDIT THIS -->
   </div>
 </section>
 
 <section id="booking">
   <div class="wrap narrow">
     <h2>Book Your Tour</h2>
-    <p class="note">Submitting this form sends us a request. We will reply to confirm availability and share payment instructions. No payment is taken online.</p>
+    <p class="note">Submitting this form sends us a request. We will reply to confirm availability and share payment instructions. <strong>No payment is taken online.</strong></p>
 
     <form id="booking-form" novalidate>
       <label>Full name
@@ -157,7 +157,19 @@
       <button type="submit" class="btn btn-primary">Send Booking Request</button>
       <div id="form-status" class="form-status" role="status"></div>
 
-      <p class="note">Privacy: We use your details only to respond to your booking request and arrange your tour. We do not sell or share them.</p>
+      <p 
+        <div class="note privacy">
+          <h3>Data Privacy Notice and Consent</h3>
+            <p>In compliance with the Data Privacy Act of 2012 (Republic Act No. 10173), please be informed that Rhenante Travel and Tours will collect, record, store, and process the personal information you provide in this form.</p>
+            <ul>
+            <li><strong>Purpose:</strong> The information collected will be used solely for processing your booking request, confirming availability, arranging your tour, and sending payment instructions, and will not be shared with unauthorized third parties.</li>
+            <li><strong>Voluntary Participation:</strong> Your participation in this form is completely voluntary. You may choose not to proceed or withdraw your consent at any time without negative consequence.</li>
+            <li><strong>Security:</strong> We implement appropriate organizational, physical, and technical security measures to protect your data.</li>
+            <li><strong>Data Subject Rights:</strong> Under the law, you have the right to be informed, to access, correct, or object to the processing of your data, and to lodge a complaint with the National Privacy Commission (NPC).</li>
+            </ul>
+        <p>By filling out and submitting this form, you consent to the processing of your personal data for the stated purpose.</p>
+      </div>
+    </p>
     </form>
 
     <h3 class="sub">Or book faster by message</h3>
