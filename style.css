@@ -398,3 +398,12 @@ a:hover { color: var(--teal); }
 @media (prefers-reduced-motion: reduce) {
   .wave { animation: none; }
 }
+
+/* ===== About Us background ===== */
+
+#about {
+  background: linear-gradient(180deg, #e8f4f8 0%, #d3eaf2 100%);
+}
+#about h2 {
+  color: var(--navy);
+}
