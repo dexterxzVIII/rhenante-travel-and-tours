@@ -325,3 +325,11 @@ a:hover { color: var(--teal); }
   justify-content: flex-start;
   margin-top: 0;
 }
+
+/* ===== Center the reCAPTCHA checkbox in the booking form ===== */
+
+#booking-form .g-recaptcha {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
