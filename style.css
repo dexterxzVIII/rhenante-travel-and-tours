@@ -311,3 +311,17 @@ a:hover { color: var(--teal); }
 .social-buttons a.ig:hover {
   box-shadow: 0 10px 22px rgba(220, 39, 67, .4);
 }
+
+/* ===== Follow Us: single column, buttons below the text ===== */
+
+#social .wrap.social-text {
+  display: block;
+  grid-template-columns: none;
+}
+#social .social-text p {
+  margin: 0 0 1.25rem;
+}
+#social .social-buttons {
+  justify-content: flex-start;
+  margin-top: 0;
+}
