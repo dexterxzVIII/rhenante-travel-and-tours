@@ -360,3 +360,48 @@ a:hover { color: var(--teal); }
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Wave loading screen ===== */
+
+.loader {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--ocean) 100%);
+  color: #fff; text-align: center; overflow: hidden;
+  transition: opacity .6s ease, visibility .6s;
+  /* Safety net: hides the loader after 8 seconds even if the script fails */
+  animation: loaderFallback .5s ease 8s forwards;
+}
+@keyframes loaderFallback { to { opacity: 0; visibility: hidden; } }
+.loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loader-brand {
+  font: 700 1.4rem "Poppins", sans-serif; margin-bottom: .4rem;
+  position: relative; z-index: 2; animation: fadeUp .9s ease both;
+}
+.loader-text {
+  color: #cfe9f2; font-size: .95rem; margin: 0 0 2.5rem;
+  position: relative; z-index: 2; animation: fadeUp 1.1s ease both;
+}
+
+/* Waves at the bottom */
+
+.waves { position: absolute; left: 0; right: 0; bottom: 0; height: 160px; }
+.wave {
+  position: absolute; left: 0; bottom: 0; width: 200%;
+  animation: drift linear infinite;
+}
+.wave svg { display: block; width: 100%; height: 100%; }
+.wave path { fill: var(--teal); }
+.wave-1 { height: 90px;  opacity: .35; animation-duration: 8s; }
+.wave-2 { height: 110px; opacity: .55; animation-duration: 5.5s; }
+.wave-3 { height: 70px;  opacity: .9;  animation-duration: 3.5s; }
+.wave-3 path { fill: var(--sand); }
+
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Respect reduced motion: no moving waves */
+
+@media (prefers-reduced-motion: reduce) {
+  .wave { animation: none; }
+}
