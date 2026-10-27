@@ -1,4 +1,5 @@
 /* ===== Rhenante Travel & Tours: site logic. Content comes from site-config.json ===== */
+
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const peso = n => "PHP " + n.toLocaleString("en-PH");
@@ -27,6 +28,7 @@ async function init() {
   const TOURS = Object.fromEntries(CFG.tours.map(t => [t.id, t]));
 
   // Fill text, links, and the hero photo from the config
+  
   $$("[data-bind]").forEach(n => {
     const v = getPath(CFG, n.dataset.bind);
     if (v != null) n.textContent = v;
@@ -49,6 +51,7 @@ async function init() {
   }
 
   // Tour cards, gallery, and tour dropdown
+  
   $("#tour-grid").innerHTML = CFG.tours.map(t => `
     <article class="card">
       <img src="${t.img}" alt="${t.name} photo" loading="lazy">
@@ -109,6 +112,7 @@ Name: ${el.fullname.value || "(not given)"}`;
   }
 
   // Booking form submission
+  
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const status = $("#form-status");
@@ -152,8 +156,8 @@ Name: ${el.fullname.value || "(not given)"}`;
     }
   });
 
-  // Messenger, WhatsApp, and Viber buttons
     // Messenger, Text, and Call buttons in the booking area
+  
   $$("[data-book]").forEach(btn => btn.addEventListener("click", async () => {
     const msg = bookingMessage();
     const kind = btn.dataset.book;
@@ -171,6 +175,7 @@ Name: ${el.fullname.value || "(not given)"}`;
   }));
 
   // Share and "Book this tour" buttons on the tour cards
+  
   function shareTo(kind) {
     const page = location.href.split("#")[0];
     const url = encodeURIComponent(page);
@@ -191,6 +196,7 @@ Name: ${el.fullname.value || "(not given)"}`;
   });
 
   // Mobile menu and header shadow
+  
   const header = $(".site-header");
   const menuBtn = $(".menu-btn");
   menuBtn.addEventListener("click", () => {
@@ -203,6 +209,7 @@ Name: ${el.fullname.value || "(not given)"}`;
   onScroll();
 
   // Missing photos show a gradient, and sections fade in (unless reduced motion is on)
+  
   document.addEventListener("error", e => {
     if (e.target.tagName === "IMG") e.target.classList.add("img-fallback");
   }, true);
