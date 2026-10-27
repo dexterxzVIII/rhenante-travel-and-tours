@@ -419,3 +419,12 @@ a:hover { color: var(--teal); }
   background: var(--green);
   box-shadow: 0 6px 18px rgba(46, 125, 50, .3);
 }
+
+/* ===== Space between the privacy notice and "Or book faster by message" ===== */
+
+#booking .privacy {
+  margin-bottom: 0;
+}
+#booking h3.sub {
+  margin-top: 2.5rem;
+}
