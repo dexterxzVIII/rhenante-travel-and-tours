@@ -5,19 +5,22 @@
       { "label": "Viber/WhatsApp", "value": "YOUR VIBER NUMBER" },
       { "label": "Email", "value": "YOUR EMAIL" }
     ],
+      
     "messengerLink": "https://m.me/rhenante.padada",
-    "facebookPage": "https://facebook.com/rhenante.padada",
+    "facebookPage": "https://facebook.com/rhenante.padada"
     },
-  },
+  
   "form": {
     "endpoint": "https://formspree.io/f/xjyyykjp"
   },
+   
   "hero": {
     "eyebrow": "Island Garden City of Samal, Davao del Norte, Philippines",
     "title": "Discover Samal Island with Rhenante Travel & Tours",
     "subtitle": "Island hopping, land tours, waterfalls, and relaxing beach days, just a short trip from Davao City.",
     "image": "images/hero.jpg"
   },
+   
     "payment": {
     "methods": [
       { "label": "GCash", "details": "Renante Padada | 09651940900" },
@@ -36,6 +39,7 @@
       "adult": 900,
       "child": 500
     },
+     
     {
       "id": "waterfalls",
       "name": "Hagimit Waterfall",
@@ -46,6 +50,7 @@
       "adult": 800,
       "child": 200
     },
+     
     {
       "id": "beach-day",
       "name": "Beach Day Package",
@@ -56,6 +61,7 @@
       "adult": 900,
       "child": 300
     },
+     
     {
       "id": "overnight",
       "name": "Overnight Stay Package",
@@ -67,6 +73,7 @@
       "child": 1500
     }
   ],
+   
   "gallery": [
     {
       "src": "https://placehold.co/600x400?text=Photo+1",
