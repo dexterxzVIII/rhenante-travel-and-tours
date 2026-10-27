@@ -50,7 +50,6 @@ async function init() {
         <div class="share">
           <button data-share="facebook">Facebook</button>
           <button data-share="messenger">Messenger</button>
-          <button data-share="copy">Copy link</button>
         </div>
       </div>
     </article>`).join("");
