@@ -37,6 +37,17 @@ async function init() {
   });
   document.documentElement.style.setProperty("--hero-img", `url("${CFG.hero.image}")`);
 
+    // Contact and payment lists (managed in the editor)
+  
+  const payList = $("#payment-list");
+  if (payList && CFG.payment?.methods) {
+    payList.innerHTML = CFG.payment.methods.map(m => `<li><strong>${m.label}:</strong> ${m.details}</li>`).join("");
+  }
+  const contactList = $("#contact-list");
+  if (contactList && CFG.contact?.lines) {
+    contactList.innerHTML = CFG.contact.lines.map(l => `<p>${l.label}: ${l.value}</p>`).join("");
+  }
+
   // Tour cards, gallery, and tour dropdown
   $("#tour-grid").innerHTML = CFG.tours.map(t => `
     <article class="card">
