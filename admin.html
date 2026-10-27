@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Site Editor | Rhenante Travel & Tours</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem; }
+    .admin [hidden] { display: none !important; }
+    .admin fieldset { border: 1px solid #cbd9e2; border-radius: 12px; padding: 1rem; margin: 0 0 1rem; display: grid; gap: .75rem; }
+    .admin legend { font-weight: 700; color: var(--ocean); padding: 0 .4rem; text-transform: capitalize; }
+    .admin .thumb { width: 180px; border-radius: 10px; }
+    .admin .bar { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+<section class="admin">
+  <h1>Site Editor</h1>
+  <p class="note">Only the owner can save changes. Keep this page link private.</p>
+
+  <fieldset id="login">
+    <legend>Connect to GitHub</legend>
+    <label>Access token <input id="token" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+    <button class="btn btn-primary" id="connect">Connect</button>
+    <p class="note" id="login-msg"></p>
+  </fieldset>
+
+  <div id="editor" hidden>
+    <div id="fields"></div>
+    <div class="bar">
+      <button class="btn btn-primary" id="save">Save changes to website</button>
+      <button class="btn btn-ghost" id="logout">Disconnect</button>
+    </div>
+    <p class="note" id="status"></p>
+  </div>
+</section>
+
+<script>
+  const OWNER = "dexterxzviii";
+  const REPO = "rhenante-travel-and-tours";
+  const BRANCH = "main";
+  const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+  const $ = s => document.querySelector(s);
+  let token = sessionStorage.getItem("ghToken") || "";
+  let cfg = null, sha = null;
+
+  const toB64 = s => btoa(Array.from(new TextEncoder().encode(s), b => String.fromCharCode(b)).join(""));
+  const fromB64 = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), c => c.charCodeAt(0)));
+  const readB64 = f => new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(",")[1]);
+    r.onerror = rej;
+    r.readAsDataURL(f);
+  });
+  const setStatus = msg => ($("#status").textContent = msg);
+  const errText = s => ({
+    401: "the token is invalid or expired",
+    403: "the token has no write access to this repository",
+    404: "the repository or file was not found",
+    409: "the file changed elsewhere. Reload the page and try again",
+    422: "a file with that name already exists"
+  })[s] || `error ${s}`;
+
+  async function gh(path, options = {}) {
+    const res = await fetch(API + path, {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(options.headers || {})
+      }
+    });
+    if (!res.ok) throw new Error(errText(res.status));
+    return res.json();
+  }
+
+  async function load() {
+    const f = await gh(`site-config.json?ref=${BRANCH}`);
+    sha = f.sha;
+    cfg = JSON.parse(fromB64(f.content));
+    $("#login").hidden = true;
+    $("#editor").hidden = false;
+    render();
+    setStatus("Loaded. Edit anything below, then click Save.");
+  }
+
+  $("#connect").onclick = async () => {
+    token = $("#token").value.trim();
+    try {
+      await load();
+      sessionStorage.setItem("ghToken", token);
+    } catch (e) {
+      token = "";
+      $("#login-msg").textContent = "Could not connect: " + e.message + ".";
+    }
+  };
+  $("#logout").onclick = () => { sessionStorage.removeItem("ghToken"); location.reload(); };
+  if (token) load().catch(() => sessionStorage.removeItem("ghToken"));
+
+  // Build a form from whatever is in site-config.json
+  function render() {
+    $("#fields").innerHTML = "";
+    build(cfg, [], $("#fields"));
+  }
+
+  function build(obj, path, box, title = "") {
+    if (Array.isArray(obj)) {
+      obj.forEach((item, i) => {
+        const fs = document.createElement("fieldset");
+        fs.innerHTML = `<legend>${title} ${i + 1}</legend>`;
+        build(item, [...path, i], fs);
+        box.appendChild(fs);
+      });
+      return;
+    }
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value && typeof value === "object") {
+        const fs = document.createElement("fieldset");
+        fs.innerHTML = `<legend>${key}</legend>`;
+        build(value, [...path, key], fs, key);
+        box.appendChild(fs);
+      } else {
+        field([...path, key], value, box);
+      }
+    });
+  }
+
+  function field(path, value, box) {
+    const key = path[path.length - 1];
+    const label = document.createElement("label");
+    label.textContent = key;
+    const input = document.createElement(typeof value === "string" && value.length > 90 ? "textarea" : "input");
+    if (input.tagName === "INPUT") input.type = typeof value === "number" ? "number" : "text";
+    input.value = value;
+    input.addEventListener("input", () =>
+      set(path, typeof value === "number" ? Number(input.value) : input.value));
+    label.appendChild(input);
+    box.appendChild(label);
+
+    // Photo fields get a preview and an upload button
+    if (/img|image|src/i.test(key)) {
+      const thumb = document.createElement("img");
+      thumb.className = "thumb";
+      thumb.alt = "";
+      thumb.src = value;
+      const file = document.createElement("input");
+      file.type = "file";
+      file.accept = "image/*";
+      file.addEventListener("change", async () => {
+        const f = file.files[0];
+        if (!f) return;
+        try {
+          setStatus("Uploading photo...");
+          const name = `images/${Date.now()}-${f.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-")}`;
+          await gh(name, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: `Add photo ${f.name}`, content: await readB64(f), branch: BRANCH })
+          });
+          set(path, name);
+          input.value = name;
+          thumb.src = name;
+          setStatus("Photo uploaded. Click Save to publish it on the site.");
+        } catch (e) {
+          setStatus("Photo upload failed: " + e.message + ".");
+        }
+      });
+      box.appendChild(thumb);
+      box.appendChild(file);
+    }
+  }
+
+  function set(path, v) {
+    let o = cfg;
+    path.slice(0, -1).forEach(k => (o = o[k]));
+    o[path[path.length - 1]] = v;
+  }
+
+  $("#save").onclick = async () => {
+    try {
+      setStatus("Saving...");
+      const res = await gh("site-config.json", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "Update website content",
+          content: toB64(JSON.stringify(cfg, null, 2)),
+          branch: BRANCH,
+          sha
+        })
+      });
+      sha = res.content.sha;
+      setStatus("Saved! The website updates in about 1 to 2 minutes.");
+    } catch (e) {
+      setStatus("Could not save: " + e.message + ".");
+    }
+  };
+</script>
+</body>
+</html>
