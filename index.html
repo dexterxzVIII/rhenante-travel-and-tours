@@ -36,9 +36,9 @@
 
 <section id="top" class="hero">
   <div class="hero-inner">
-    <p class="eyebrow">Island Garden City of Samal, Davao del Norte</p>
-    <h1>Discover Samal Island with Rhenante Travel &amp; Tours</h1>
-    <p>Island hopping, waterfalls, and relaxing beach days, just a short trip from Davao City.</p>
+    <p class="eyebrow" data-bind="hero.eyebrow"></p>
+    <h1 data-bind="hero.title"></h1>
+    <p data-bind="hero.subtitle"></p>
     <a href="#booking" class="btn btn-primary">Book Your Tour</a>
   </div>
 </section>
@@ -65,13 +65,7 @@
 <section id="gallery">
   <div class="wrap">
     <h2>Gallery</h2>
-    <div class="grid gallery">
-      <!-- Replace each src with images/your-photo.jpg -->
-      <img src="https://placehold.co/600x400?text=Photo+1" alt="Beach view on Samal Island" loading="lazy">
-      <img src="https://placehold.co/600x400?text=Photo+2" alt="Tourists on a island hopping boat" loading="lazy">
-      <img src="https://placehold.co/600x400?text=Photo+3" alt="Hagimit Falls" loading="lazy">
-      <img src="https://placehold.co/600x400?text=Photo+4" alt="Kaputian Beach Park" loading="lazy">
-    </div>
+    <div id="gallery-grid" class="grid gallery"></div>
   </div>
 </section>
 
@@ -177,8 +171,10 @@
 
     <h3 class="sub">Payment Instructions</h3>
     <ul>
-      <li>GCash: +639xx - xxx- xxxx</li>
-      <li>Cash: Paid before/during/after the tour.</li>
+        <li>GCash: <span data-bind="payment.gcash"></span></li>
+        <li>Maya: <span data-bind="payment.maya"></span></li>
+        <li>Bank transfer: <span data-bind="payment.bank"></span></li>
+        <li>Cash: <span data-bind="payment.cash"></span></li>
     </ul>
     <p class="note">Deposits and cancellation terms are in the FAQ above.</p>
   </div>
@@ -187,7 +183,11 @@
 <section id="contact" class="alt">
   <div class="wrap">
     <h2>Contact Us</h2>
-    <p>Phone: +639xx - xxx- xxxx<br>Messenger: Samal Hopping Rhenante<br>Email: rhenantetravelandtours@gmail.com</p>
+    <p>
+        Phone: <span data-bind="contact.phone"></span><br>
+        Viber/WhatsApp: <span data-bind="contact.viberNumber"></span><br>
+        Email: <span data-bind="contact.email"></span>
+    </p>
     
     <!-- Google Maps: go to maps.google.com, search your location, Share > Embed a map, then paste the iframe here. -->
     
@@ -219,8 +219,8 @@
 <!-- Mobile-only floating message buttons -->
   
 <div class="float-msg">
-  <a href="https://m.me/YOUR_PAGE_USERNAME" target="_blank" rel="noopener">Messenger</a>
-  <a href="https://wa.me/639606054860" target="_blank" rel="noopener">WhatsApp</a>
+  <a data-href="contact.messengerLink" target="_blank" rel="noopener">Messenger</a>
+  <a data-href="contact.whatsappLink" target="_blank" rel="noopener">WhatsApp</a>
 </div>
 
 <div id="toast" class="toast" role="status"></div>
