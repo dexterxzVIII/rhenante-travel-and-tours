@@ -43,7 +43,7 @@
   const BRANCH = "main";
   const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
   const $ = s => document.querySelector(s);
-  const SINGULAR = { tours: "tour", gallery: "photo" };
+  const SINGULAR = { tours: "tour", gallery: "photo", methods: "payment method", lines: "contact line" };
   let token = sessionStorage.getItem("ghToken") || "";
   let cfg = null, sha = null;
 
@@ -199,7 +199,24 @@
     return name;
   }
 
-  // Add a new tour, or pick a photo for the gallery
+    // Templates for new items, keyed by the name shown in the editor
+  const TEMPLATES = {
+    tour: () => ({
+      id: "tour-" + Date.now().toString(36),
+      name: "New tour",
+      desc: "[EDIT THIS]",
+      duration: "[EDIT THIS]",
+      includes: "[EDIT THIS]",
+      img: "https://placehold.co/600x400?text=New+Tour",
+      adult: 0,
+      child: 0
+    }),
+    "payment method": () => ({ label: "New method", details: "[EDIT THIS]" }),
+    "contact line": () => ({ label: "New line", value: "[EDIT THIS]" })
+  };
+
+  // Add a new item, or pick a photo for the gallery
+  
   function addItem(path, noun) {
     const list = getAt(path);
     if (noun === "photo") {
@@ -225,18 +242,9 @@
       input.click();
       return;
     }
-    list.push({
-      id: "tour-" + Date.now().toString(36),
-      name: "New tour",
-      desc: "[EDIT THIS]",
-      duration: "[EDIT THIS]",
-      includes: "[EDIT THIS]",
-      img: "https://placehold.co/600x400?text=New+Tour",
-      adult: 0,
-      child: 0
-    });
+    list.push(TEMPLATES[noun] ? TEMPLATES[noun]() : { value: "[EDIT THIS]" });
     render();
-    setStatus("Tour added. Fill in the name and prices, then click Save.");
+    setStatus(`${noun[0].toUpperCase() + noun.slice(1)} added. Fill in the details, then click Save.`);
   }
 
   function removeItem(path, i, noun) {
