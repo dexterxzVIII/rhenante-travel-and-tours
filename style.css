@@ -328,6 +328,7 @@ a:hover { color: var(--teal); }
 }
 
 /* ===== Booking form: fit inside the card on phones ===== */
+
 #booking form,
 #booking form > *,
 #booking label,
@@ -406,4 +407,15 @@ a:hover { color: var(--teal); }
 }
 #about h2 {
   color: var(--navy);
+}
+
+/* ===== Floating buttons: Messenger, Text, and Call ===== */
+
+.float-msg a.sms-msg {
+  background: linear-gradient(135deg, var(--teal), var(--ocean));
+  box-shadow: 0 6px 18px rgba(11, 110, 153, .3);
+}
+.float-msg a.call-msg {
+  background: var(--green);
+  box-shadow: 0 6px 18px rgba(46, 125, 50, .3);
 }
