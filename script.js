@@ -210,3 +210,14 @@ Name: ${el.fullname.value || "(not given)"}`;
 }
 
 init().catch(() => toast("Could not load site content. Please refresh the page."));
+
+/* ===== Hide the wave loader once the page is ready ===== */
+
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+  // Show the waves for at least 1.6 seconds, or 0.4 seconds if reduced motion is on
+  const minTime = matchMedia("(prefers-reduced-motion: reduce)").matches ? 400 : 1600;
+  const wait = Math.max(0, minTime - performance.now());
+  setTimeout(() => loader.classList.add("done"), wait);
+});
