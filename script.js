@@ -153,6 +153,7 @@ Name: ${el.fullname.value || "(not given)"}`;
   });
 
   // Messenger, WhatsApp, and Viber buttons
+    // Messenger, Text, and Call buttons in the booking area
   $$("[data-book]").forEach(btn => btn.addEventListener("click", async () => {
     const msg = bookingMessage();
     const kind = btn.dataset.book;
@@ -161,13 +162,11 @@ Name: ${el.fullname.value || "(not given)"}`;
       toast("Message copied. Paste it into Messenger.");
       window.open(CFG.contact.messengerLink, "_blank", "noopener");
     }
-    if (kind === "whatsapp") {
-      window.open(`${CFG.contact.whatsappLink}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    if (kind === "text") {
+      window.location.href = `sms:${CFG.contact.textNumber}?body=${encodeURIComponent(msg)}`;
     }
-    if (kind === "viber") {
-      await copyText(msg);
-      toast("Message copied. Paste it into Viber.");
-      window.open(CFG.contact.viberLink);
+    if (kind === "call") {
+      window.location.href = `tel:${CFG.contact.callNumber}`;
     }
   }));
 
