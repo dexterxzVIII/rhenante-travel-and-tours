@@ -1,33 +1,39 @@
 {
-   "contact": {
+  "contact": {
     "lines": [
-      { "label": "Phone", "value": "YOUR PHONE" },
-      { "label": "Viber/WhatsApp", "value": "YOUR VIBER NUMBER" },
-      { "label": "Email", "value": "YOUR EMAIL" }
+      {
+        "label": "Phone",
+        "value": "09651940900"
+      },
+      {
+        "label": "Email",
+        "value": "rhenantetravelandtours@gmail.com"
+      }
     ],
-      
     "messengerLink": "https://m.me/rhenante.padada",
     "facebookPage": "https://facebook.com/rhenante.padada"
-    },
-  
+  },
   "form": {
     "endpoint": "https://formspree.io/f/xjyyykjp"
   },
-   
   "hero": {
     "eyebrow": "Island Garden City of Samal, Davao del Norte, Philippines",
     "title": "Discover Samal Island with Rhenante Travel & Tours",
     "subtitle": "Island hopping, land tours, waterfalls, and relaxing beach days, just a short trip from Davao City.",
     "image": "images/hero.jpg"
   },
-   
-    "payment": {
+  "payment": {
     "methods": [
-      { "label": "GCash", "details": "Renante Padada | 09651940900" },
-      { "label": "Cash", "details": "Cash payment is accepted before, during, or after the tour." }
+      {
+        "label": "GCash",
+        "details": "Renante Padada | 09651940900"
+      },
+      {
+        "label": "Cash",
+        "details": "Cash payment is accepted before, during, or after the tour."
+      }
     ]
   },
-    
   "tours": [
     {
       "id": "island-hopping",
@@ -39,41 +45,27 @@
       "adult": 900,
       "child": 500
     },
-     
     {
-      "id": "waterfalls",
-      "name": "Hagimit Waterfall",
-      "desc": "Hike to local waterfalls with a guide and a swim stop.",
+      "id": "inland-tour",
+      "name": "Inland Tour",
+      "desc": "Tour around the island by land; visiting the famous tourist spots in the island.",
       "duration": "5 hours",
       "includes": "Guide and entrance fees, foods.",
       "img": "https://placehold.co/600x400?text=Waterfalls",
       "adult": 800,
       "child": 200
     },
-     
     {
-      "id": "beach-day",
-      "name": "Beach Day Package",
-      "desc": "A full day at a beach with lunch and a relaxing setup.",
+      "id": "joiner-tour",
+      "name": "Joiner Tour",
+      "desc": "Alone but not lonely? Joiner tour is for you!",
       "duration": "8 hours",
-      "includes": "Transport, lunch, and cottage.",
-      "img": "https://placehold.co/600x400?text=Beach+Day",
-      "adult": 900,
-      "child": 300
-    },
-     
-    {
-      "id": "overnight",
-      "name": "Overnight Stay Package",
-      "desc": "Two days and one night with accommodation and island activities. ",
-      "duration": "2 days, 1 night",
-      "includes": "Accommodation, meals, and guide.",
+      "includes": "Visit nearby islands by boat with swimming and snorkeling stops, and other activities.",
       "img": "https://placehold.co/600x400?text=Overnight",
-      "adult": 3500,
-      "child": 1500
+      "adult": 900,
+      "child": 500
     }
   ],
-   
   "gallery": [
     {
       "src": "https://placehold.co/600x400?text=Photo+1",
