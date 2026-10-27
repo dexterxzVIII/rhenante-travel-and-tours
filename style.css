@@ -10,6 +10,7 @@
   --green: #2e7d32;
   --radius: 16px;
   --shadow: 0 10px 30px rgba(11, 37, 64, .12);
+  --hero-img: url("images/hero.jpg");
 }
 
 * { box-sizing: border-box; }
@@ -87,7 +88,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   color: #fff; padding: 6rem 1.25rem 4rem; overflow: hidden;
   background:
     linear-gradient(160deg, rgba(11, 37, 64, .55), rgba(11, 110, 153, .55) 60%, rgba(26, 166, 160, .45)),
-    url("images/hero.jpg") center / cover no-repeat,
+    var(--hero-img) center / cover no-repeat,
     linear-gradient(135deg, var(--navy), var(--ocean) 55%, var(--teal));
 }
 .hero-inner { max-width: 760px; animation: fadeUp .9s ease backwards; }
