@@ -137,13 +137,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); transition: transform .4s ease; }
 .gallery img:hover { transform: scale(1.02); }
 
-/* Testimonials */
-
-blockquote {
-  margin: 0; padding: 1.5rem; background: #fff; border-radius: var(--radius);
-  box-shadow: var(--shadow); font-style: italic; color: var(--ink);
-}
-
 /* Image fallback when a photo is missing */
 
 img.img-fallback {
