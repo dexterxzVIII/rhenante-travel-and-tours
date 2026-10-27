@@ -179,12 +179,7 @@
     <p class="note">Messenger and Viber do not accept pre-filled text from links, so your message is copied first. Paste it into the chat.</p>
 
     <h3 class="sub">Payment Instructions</h3>
-    <ul>
-        <li>GCash: <span data-bind="payment.gcash"></span></li>
-        <li>Maya: <span data-bind="payment.maya"></span></li>
-        <li>Bank transfer: <span data-bind="payment.bank"></span></li>
-        <li>Cash: <span data-bind="payment.cash"></span></li>
-    </ul>
+    <ul id="payment-list" class="info-list"></ul>
     <p class="note">Deposits and cancellation terms are in the FAQ above.</p>
   </div>
 </section>
@@ -192,11 +187,7 @@
 <section id="contact" class="alt">
   <div class="wrap">
     <h2>Contact Us</h2>
-    <p>
-        Phone: <span data-bind="contact.phone"></span><br>
-        Viber/WhatsApp: <span data-bind="contact.viberNumber"></span><br>
-        Email: <span data-bind="contact.email"></span>
-    </p>
+    <div id="contact-list" class="info-list"></div>
     
     <!-- Google Maps: go to maps.google.com, search your location, Share > Embed a map, then paste the iframe here. -->
     
