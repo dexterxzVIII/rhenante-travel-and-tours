@@ -333,3 +333,30 @@ a:hover { color: var(--teal); }
   justify-content: center;
   width: 100%;
 }
+
+/* ===== Booking form: fit inside the card on phones ===== */
+#booking form,
+#booking form > *,
+#booking label,
+#booking .two > * {
+  min-width: 0;
+  max-width: 100%;
+}
+#booking form input,
+#booking form select,
+#booking form textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#booking form #form-status:empty {
+  display: none;
+}
+@media (max-width: 639px) {
+  #booking form {
+    padding: 1.1rem;
+  }
+  #booking form .two {
+    grid-template-columns: 1fr;
+  }
+}
