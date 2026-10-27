@@ -58,3 +58,234 @@
   
   const TEMPLATES = {
     tour: () => ({
+      id: "tour-" + Date.now().toString(36),
+      name: "New tour",
+      desc: "[EDIT THIS]",
+      duration: "[EDIT THIS]",
+      includes: "[EDIT THIS]",
+      img: "https://placehold.co/600x400?text=New+Tour",
+      adult: 0,
+      child: 0
+    }),
+    "payment method": () => ({ label: "New method", details: "[EDIT THIS]" }),
+    "contact line": () => ({ label: "New line", value: "[EDIT THIS]" })
+  };
+
+  let token = sessionStorage.getItem("ghToken") || "";
+  let cfg = null, sha = null;
+
+  const toB64 = s => btoa(Array.from(new TextEncoder().encode(s), b => String.fromCharCode(b)).join(""));
+  const fromB64 = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), c => c.charCodeAt(0)));
+  const readB64 = f => new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(",")[1]);
+    r.onerror = rej;
+    r.readAsDataURL(f);
+  });
+  const setStatus = msg => ($("#status").textContent = msg);
+  const errText = s => ({
+    401: "the token is invalid or expired",
+    403: "the token has no write access to this repository",
+    404: "the repository or file was not found",
+    409: "the file changed elsewhere. Reload the page and try again",
+    422: "a file with that name already exists"
+  })[s] || `error ${s}`;
+
+  async function gh(path, options = {}) {
+    const res = await fetch(API + path, {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(options.headers || {})
+      }
+    });
+    if (!res.ok) throw new Error(errText(res.status));
+    return res.json();
+  }
+
+  async function load() {
+    const f = await gh(`site-config.json?ref=${BRANCH}`);
+    sha = f.sha;
+    cfg = JSON.parse(fromB64(f.content));
+    $("#login").hidden = true;
+    $("#editor").hidden = false;
+    render();
+    setStatus("Loaded. Edit anything below, then click Save.");
+  }
+
+  $("#connect").onclick = async () => {
+    token = $("#token").value.trim();
+    try {
+      await load();
+      sessionStorage.setItem("ghToken", token);
+    } catch (e) {
+      token = "";
+      $("#login-msg").textContent = "Could not connect: " + e.message + ".";
+    }
+  };
+  $("#logout").onclick = () => { sessionStorage.removeItem("ghToken"); location.reload(); };
+  if (token) load().catch(() => sessionStorage.removeItem("ghToken"));
+
+  // Read and write a value in the config, using a path like ["tours", 0, "name"]
+  const getAt = path => path.reduce((o, k) => o[k], cfg);
+  function setAt(path, v) {
+    const parent = path.slice(0, -1).reduce((o, k) => o[k], cfg);
+    parent[path[path.length - 1]] = v;
+  }
+
+  function render() {
+    $("#fields").innerHTML = "";
+    build(cfg, [], $("#fields"));
+  }
+
+  function build(obj, path, box, title = "") {
+    if (Array.isArray(obj)) {
+      const noun = SINGULAR[title] || "item";
+      obj.forEach((item, i) => {
+        const fs = document.createElement("fieldset");
+        fs.innerHTML = `<legend>${noun} ${i + 1}</legend>`;
+        build(item, [...path, i], fs);
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn btn-ghost";
+        del.textContent = `Remove this ${noun}`;
+        del.onclick = () => removeItem(path, i, noun);
+        fs.appendChild(del);
+        box.appendChild(fs);
+      });
+      const add = document.createElement("button");
+      add.type = "button";
+      add.className = "btn btn-primary";
+      add.textContent = `+ Add ${noun}`;
+      add.onclick = () => addItem(path, noun);
+      box.appendChild(add);
+      return;
+    }
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value && typeof value === "object") {
+        const fs = document.createElement("fieldset");
+        fs.innerHTML = `<legend>${key}</legend>`;
+        build(value, [...path, key], fs, key);
+        box.appendChild(fs);
+      } else {
+        field([...path, key], value, box);
+      }
+    });
+  }
+
+  function field(path, value, box) {
+    const key = path[path.length - 1];
+    const label = document.createElement("label");
+    label.textContent = key;
+    const input = document.createElement(typeof value === "string" && value.length > 90 ? "textarea" : "input");
+    if (input.tagName === "INPUT") input.type = typeof value === "number" ? "number" : "text";
+    input.value = value;
+    input.addEventListener("input", () =>
+      setAt(path, typeof value === "number" ? Number(input.value) : input.value));
+    label.appendChild(input);
+    box.appendChild(label);
+
+    // Photo fields get a preview and an upload button
+    
+    if (/img|image|src/i.test(key)) {
+      const thumb = document.createElement("img");
+      thumb.className = "thumb";
+      thumb.alt = "";
+      thumb.src = value;
+      const file = document.createElement("input");
+      file.type = "file";
+      file.accept = "image/*";
+      file.addEventListener("change", async () => {
+        const f = file.files[0];
+        if (!f) return;
+        try {
+          setStatus("Uploading photo...");
+          const name = await uploadPhoto(f);
+          setAt(path, name);
+          input.value = name;
+          thumb.src = name;
+          setStatus("Photo uploaded. Click Save to publish it on the site.");
+        } catch (e) {
+          setStatus("Photo upload failed: " + e.message + ".");
+        }
+      });
+      box.appendChild(thumb);
+      box.appendChild(file);
+    }
+  }
+
+  // Upload a photo file to the images folder and return its path
+  
+  async function uploadPhoto(f) {
+    const name = `images/${Date.now()}-${f.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-")}`;
+    await gh(name, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: `Add photo ${f.name}`, content: await readB64(f), branch: BRANCH })
+    });
+    return name;
+  }
+
+  // Add a new item, or pick a photo for the gallery
+  
+  function addItem(path, noun) {
+    const list = getAt(path);
+    if (noun === "photo") {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.style.display = "none";
+      document.body.appendChild(input);
+      input.onchange = async () => {
+        const f = input.files[0];
+        input.remove();
+        if (!f) return;
+        try {
+          setStatus("Uploading photo...");
+          const src = await uploadPhoto(f);
+          list.push({ src, alt: f.name.replace(/\.[^.]+$/, "") });
+          render();
+          setStatus("Photo added. Write its description, then click Save.");
+        } catch (e) {
+          setStatus("Photo upload failed: " + e.message + ".");
+        }
+      };
+      input.click();
+      return;
+    }
+    list.push(TEMPLATES[noun] ? TEMPLATES[noun]() : { value: "[EDIT THIS]" });
+    render();
+    setStatus(`${noun[0].toUpperCase() + noun.slice(1)} added. Fill in the details, then click Save.`);
+  }
+
+  function removeItem(path, i, noun) {
+    if (!confirm(`Remove this ${noun}? You still need to click Save to publish the change.`)) return;
+    getAt(path).splice(i, 1);
+    render();
+    setStatus(`${noun[0].toUpperCase() + noun.slice(1)} removed. Click Save to publish.`);
+  }
+
+  $("#save").onclick = async () => {
+    try {
+      setStatus("Saving...");
+      const res = await gh("site-config.json", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "Update website content",
+          content: toB64(JSON.stringify(cfg, null, 2)),
+          branch: BRANCH,
+          sha
+        })
+      });
+      sha = res.content.sha;
+      setStatus("Saved! The website updates in about 1 to 2 minutes.");
+    } catch (e) {
+      setStatus("Could not save: " + e.message + ".");
+    }
+  };
+</script>
+</body>
+</html>
