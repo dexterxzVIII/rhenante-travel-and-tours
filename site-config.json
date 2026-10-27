@@ -1,13 +1,13 @@
 {
-  "contact": {
-    "phone": "+639606054860",
-    "viberNumber": "+639606054860",
-    "email": "rhenantetravelandtours@gmail.com",
-    "messengerLink": "https://m.me/rhenante.phadada",
-    "whatsappLink": "https://wa.me/639606054860",
-    "viberLink": "viber://chat?number=%2B639606054860",
-    "facebookPage": "https://www.facebook.com/rhenante.phadada",
-    "fbAppId": "09606054860"
+   "contact": {
+    "lines": [
+      { "label": "Phone", "value": "YOUR PHONE" },
+      { "label": "Viber/WhatsApp", "value": "YOUR VIBER NUMBER" },
+      { "label": "Email", "value": "YOUR EMAIL" }
+    ],
+    "messengerLink": "https://m.me/rhenante.padada",
+    "facebookPage": "https://facebook.com/rhenante.padada",
+    },
   },
   "form": {
     "endpoint": "https://formspree.io/f/xjyyykjp"
@@ -18,12 +18,13 @@
     "subtitle": "Island hopping, land tours, waterfalls, and relaxing beach days, just a short trip from Davao City.",
     "image": "images/hero.jpg"
   },
-  "payment": {
-    "gcash": "09606054860",
-    "maya": "09606054860",
-    "bank": "4136-XXXX-XX",
-    "cash": "Cash payment is accepted before, during, or after the tour."
+    "payment": {
+    "methods": [
+      { "label": "GCash", "details": "Renante Padada | 09651940900" },
+      { "label": "Cash", "details": "Cash payment is accepted before, during, or after the tour." }
+    ]
   },
+    
   "tours": [
     {
       "id": "island-hopping",
