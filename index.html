@@ -130,23 +130,23 @@
           <small class="error" data-error="date"></small>
         </label>
         <label>Pick-up location
-          <input name="pickup" type="text" placeholder="e.g., Sasa Wharf, your hotel" required>
+          <input name="pickup" type="text" placeholder="e.g., Samal Ferry Wharf, Limao Wharf, Hotel Name, etc." required>
           <small class="error" data-error="pickup"></small>
         </label>
       </div>
 
       <div class="two">
         <label>Adults
-          <input name="adults" type="number" min="1" value="1" required>
+          <input name="adults" type="number" min="0" value="0" required>
           <small class="error" data-error="adults"></small>
         </label>
-        <label>Children (under 12)
+        <label>Children (under 8)
           <input name="children" type="number" min="0" value="0">
         </label>
       </div>
 
       <label>Special requests
-        <textarea name="requests" rows="3" placeholder="Allergies, celebrations, etc."></textarea>
+        <textarea name="requests" rows="3" placeholder="e.g., Allergies, Celebrations, etc."></textarea>
       </label>
 
       <div id="estimate" class="estimate" aria-live="polite"></div>
@@ -177,7 +177,7 @@
       <button class="btn btn-ghost" data-book="text">Text us</button>
       <button class="btn btn-ghost" data-book="call">Call us</button>
     </div>
-    <p class="note">Messenger and Viber do not accept pre-filled text from links, so your message is copied first. Paste it into the chat.</p>
+    <p class="note">Messenger opens with your booking details copied. Just paste them into the chat.</p>
 
     <h3 class="sub">Payment Instructions</h3>
     <ul id="payment-list" class="info-list"></ul>
